@@ -12,6 +12,7 @@ Demo of Python/NumPy "best practices"
 
 import numpy as np
 from skimage.io import imread, imsave
+from skimage import img_as_float, img_as_ubyte
 
 # alternatively:
 # from scipy.misc import imread, imsave
@@ -68,7 +69,7 @@ def vignette(image):
 
     # result will be an array of floats, however it's good practice to explicitly
     # cast to uint8 for saving
-    return result.astype(np.uint8)
+    return img_as_ubyte(result)
 
 
 def main():
@@ -94,7 +95,7 @@ def main():
 
     # process each image
     for i, filename in enumerate(filenames):
-        image = imread(filename)
+        image = img_as_float(imread(filename))
         result = vignette(image)
         imsave(output_filename_template.format(i), result)
 
